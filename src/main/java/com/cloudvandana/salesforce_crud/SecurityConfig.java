@@ -17,17 +17,24 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(
             HttpSecurity http) throws Exception {
 
-        http.cors(cors -> cors.configurationSource(corsConfigurationSource()));
+        http.cors(cors ->
+                cors.configurationSource(corsConfigurationSource()));
 
         http.authorizeHttpRequests(auth -> auth
                 .requestMatchers(
+                        "/",
+                        "/index.html",
+                        "/assets/**",
+                        "/favicon.svg",
+                        "/icons.svg",
+                        "/vite.svg",
                         "/api/auth/**",
                         "/api/salesforce/**",
                         "/error")
                 .permitAll()
                 .anyRequest().denyAll());
 
-        // CSRF protection remains enabled for POST, PATCH and DELETE.
+        // Keep CSRF protection enabled.
         return http.build();
     }
 
@@ -47,7 +54,8 @@ public class SecurityConfig {
 
         config.setAllowCredentials(true);
 
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        UrlBasedCorsConfigurationSource source =
+                new UrlBasedCorsConfigurationSource();
 
         source.registerCorsConfiguration("/api/**", config);
 
