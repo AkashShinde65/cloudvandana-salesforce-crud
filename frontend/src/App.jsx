@@ -24,7 +24,9 @@ import {
 } from 'lucide-react'
 import './App.css'
 
-const API_BASE = 'http://localhost:8080'
+const API_BASE = import.meta.env.DEV
+  ? 'http://localhost:8080'
+  : ''
 const ALLOWED_OBJECTS = ['Account', 'Opportunity', 'Lead', 'Contact', 'Case']
 const DISPLAY_FIELDS = {
   Account: ['Name', 'Phone', 'Industry', 'Website', 'Type'],
